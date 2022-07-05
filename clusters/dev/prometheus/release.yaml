@@ -5,7 +5,7 @@ metadata:
   labels:
     service: prometheus-operator
   annotations:
-  namespace: monitoring
+  namespace: prometheus
 spec:
   releaseName: prometheus-operator
 
