@@ -1,0 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: confluentplatform
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/mcolomerc/cp-gke-gitops
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/charts/    
