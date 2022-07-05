@@ -27,61 +27,70 @@ spec:
           - backend:
               service:
                 name: kafka-bootstrap
-                port: 9092
+                port:  
+                 number: 9092
     - host: b0.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend:
               service:
                 name: kafka-0-internal
-                port: 9092
+                port: 
+                  number: 9092
     - host: b1.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend:
               service:
                 name: kafka-1-internal
-                port: 9092
+                port: 
+                  number: 9092
     - host: b2.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend:
               service:
                 name: kafka-2-internal
-                port: 9092 
+                port: 
+                  number: 9092 
     - host: b3.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend:
               service:
                 name: kafka-3-internal
-                port: 9092 
+                port: 
+                  number: 9092
     - host: b4.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend:
               service:
                 name: kafka-4-internal
-                port: 9092 
+                port: 
+                  number: 9092
     - host: ksqldb.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend:
               service:
                 name: ksqldb-bootstrap
-                port: 8088 
+                port: 
+                  number: 8088
     - host: connect.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend:
               service:
                 name: connect-bootstrap
-                port: 8088 
+                port: 
+                  number: 8083
     - host: controlcenter.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
           - backend: 
               service:
                 name: controlcenter-bootstrap
-                port: 8088
+                port: 
+                  number: 9021
         
