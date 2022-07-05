@@ -5,3 +5,16 @@ resources:
 - helm-repo.yaml
 - release.yaml
 - namespace.yaml
+- issuer.yaml
+- certificate.yaml
+configurations:
+- kustomizeconfig.yaml 
+vars:
+- name: NAMESPACE
+  objref:
+    kind: Certificate
+    group: cert-manager.io
+    apiVersion: v1
+    name: kafka-cert
+  fieldref:
+    fieldpath: metadata.namespace
