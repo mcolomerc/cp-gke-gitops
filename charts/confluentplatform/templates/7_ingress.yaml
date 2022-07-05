@@ -103,7 +103,7 @@ spec:
                   number: 8083
     - host: controlcenter.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
-        ppaths:
+        paths:
           - path: /
             pathType: Exact
             backend: 
