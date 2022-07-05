@@ -4,13 +4,13 @@ metadata:
   name: openldap
   namespace: openldap
 spec:
-  interval: 30s
+  interval: 5m0s
   chart:
     spec:
       chart: ./charts/openldap
       sourceRef:
         kind: GitRepository
-        name: openldap
+        name: gitrepo
         namespace: flux-system
       interval: 10m
       reconcileStrategy: Revision

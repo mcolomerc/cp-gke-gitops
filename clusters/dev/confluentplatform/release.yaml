@@ -4,13 +4,13 @@ metadata:
   name: confluentplatform
   namespace: confluent
 spec:
-  interval: 30s
+  interval: 1m0s
   chart:
     spec:
       chart: ./charts/confluentplatform
       sourceRef:
         kind: GitRepository
-        name: confluentplatform
+        name: gitrepo
         namespace: flux-system
       interval: 10m
       reconcileStrategy: Revision
