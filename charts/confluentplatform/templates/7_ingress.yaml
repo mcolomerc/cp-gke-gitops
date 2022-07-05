@@ -24,7 +24,9 @@ spec:
     - host: kafka.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend:
               service:
                 name: kafka-bootstrap
                 port:  
@@ -32,7 +34,9 @@ spec:
     - host: b0.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: kafka-0-internal
                 port: 
@@ -40,7 +44,9 @@ spec:
     - host: b1.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: kafka-1-internal
                 port: 
@@ -48,7 +54,9 @@ spec:
     - host: b2.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: kafka-2-internal
                 port: 
@@ -56,7 +64,9 @@ spec:
     - host: b3.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: kafka-3-internal
                 port: 
@@ -64,7 +74,9 @@ spec:
     - host: b4.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: kafka-4-internal
                 port: 
@@ -72,7 +84,9 @@ spec:
     - host: ksqldb.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: ksqldb-bootstrap
                 port: 
@@ -80,15 +94,19 @@ spec:
     - host: connect.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: connect-bootstrap
                 port: 
                   number: 8083
     - host: controlcenter.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
       http:
-        paths:
-          - backend: 
+        ppaths:
+          - path: /
+            pathType: Exact
+            backend: 
               service:
                 name: controlcenter-bootstrap
                 port: 
