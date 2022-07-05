@@ -1,0 +1,135 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  # license:
+  #  globalLicense: true
+  replicas: {{ .Values.kafka.replicas }}
+  image:
+    application: confluentinc/cp-server:{{ .Values.version }}
+    init: confluentinc/confluent-init-container:{{ .Values.initcontainer.version }}
+  dataVolumeCapacity: 10Gi 
+  configOverrides:
+    server:
+      - "confluent.license.topic.replication.factor={{ .Values.kafka.replicas }}"
+      - "confluent.metrics.reporter.topic.replicas={{ .Values.kafka.replicas }}"
+      - "confluent.tier.metadata.replication.factor={{ .Values.kafka.replicas }}"
+      - "confluent.metadata.topic.replication.factor={{ .Values.kafka.replicas }}"
+      - "confluent.balancer.topic.replication.factor={{ .Values.kafka.replicas }}"
+      - "confluent.security.event.logger.exporter.kafka.topic.replicas={{ .Values.kafka.replicas }}"
+      - "event.logger.exporter.kafka.topic.replicas={{ .Values.kafka.replicas }}"
+      - "offsets.topic.replication.factor={{ .Values.kafka.replicas }}" 
+      - "confluent.metadata.server.urls.fail.on.401=true"
+      - "confluent.metadata.server.urls.max.retries=3"
+  metricReporter:
+    enabled: true
+    authentication:
+      type: mtls  
+    tls:
+      enabled: true
+  metrics: 
+    authentication:
+      type: mtls  
+    tls:
+      enabled: true
+    prometheus:
+      whitelist: 
+        - "kafka.cluster:type=Partition,name=UnderReplicated,*"
+        - "kafka.cluster:type=Partition,name=InSyncReplicasCount,*"
+        - "kafka.cluster:type=Partition,name=ReplicasCount,*"
+        - "kafka.cluster:type=Partition,name=UnderMinIsr,*"
+      rules:
+        - pattern : kafka.server<type=(.+), name=(.+), clientId=(.+), topic=(.+), partition=(.*)><>Value
+          name: kafka_server_$1_$2
+          type: GAUGE
+          labels:
+            clientId: "$3"
+            topic: "$4"
+            partition: "$5"
+        - pattern : kafka.server<type=(.+), name=(.+), clientId=(.+), brokerHost=(.+), brokerPort=(.+)><>Value
+          name: kafka_server_$1_$2
+          type: GAUGE
+          labels:
+            clientId: "$3"
+            broker: "$4:$5"
+        - pattern: kafka.(\w+)<type=(.+), name=(.+)Percent\w*><>MeanRate
+          name: kafka_$1_$2_$3_percent
+          type: GAUGE
+        - pattern: kafka.(\w+)<type=(.+), name=(.+)Percent\w*><>Value
+          name: kafka_$1_$2_$3_percent
+          type: GAUGE
+        - pattern: kafka.(\w+)<type=(.+), name=(.+)Percent\w*, (.+)=(.+)><>Value
+          name: kafka_$1_$2_$3_percent
+          type: GAUGE
+          labels:
+            "$4": "$5"
+        - pattern: kafka.(\w+)<type=(.+), name=(.+)PerSec\w*, (.+)=(.+), (.+)=(.+)><>Count
+          name: kafka_$1_$2_$3_total
+          type: COUNTER
+          labels:
+            "$4": "$5"
+            "$6": "$7"
+  tls:
+    secretRef: kafka-tls
+  listeners:
+    internal:
+      authentication:
+        type: mtls  
+        principalMappingRules: 
+          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+      tls:
+        enabled: true 
+    external:
+      authentication:
+        type: mtls  
+        principalMappingRules: 
+          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+      tls:
+        enabled: true 
+      externalAccess:
+        type: staticForHostBasedRouting
+        staticForHostBasedRouting:
+          domain: {{ .Values.network.domain }}
+          port: 443
+  authorization:
+    type: rbac
+    superUsers:
+    - User:kafka
+  services:
+    mds:
+      tls:
+        enabled: true
+      tokenKeyPair:
+        secretRef: mds-token
+      provider:
+        type: ldap
+        ldap:
+          address: ldap://ldap.{{ .Values.ldap.namespace }}.svc.cluster.local:389
+          authentication:
+            type: simple
+            simple:
+              secretRef: credential
+          configurations:
+            groupNameAttribute: cn
+            groupObjectClass: group
+            groupMemberAttribute: member
+            groupMemberAttributePattern: CN=(.*),DC=test,DC=com
+            groupSearchBase: dc=test,dc=com
+            userNameAttribute: cn
+            userMemberOfAttributePattern: CN=(.*),DC=test,DC=com
+            userObjectClass: organizationalRole
+            userSearchBase: dc=test,dc=com
+  dependencies:
+    kafkaRest:
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-client
+    zookeeper:
+      endpoint: zookeeper.{{ .Release.Namespace }}.svc.cluster.local:2182
+      authentication:
+        type: mtls
+      tls:
+        enabled: true

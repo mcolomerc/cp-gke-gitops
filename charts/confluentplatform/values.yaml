@@ -1,0 +1,32 @@
+version: 7.1.1
+initcontainer:
+  version: 2.3.1
+
+zookeeper:
+  replicas: 3
+kafka: 
+  replicas: 5
+schemaregistry:
+  replicas: 1
+connect: 
+  replicas: 2
+  connectors:
+  - name: kafka-connect-datagen
+    owner: confluentinc
+    version: 0.5.2
+  - name: kafka-connect-http
+    owner: confluentinc
+    version: 1.0.3
+ksqldb: 
+  replicas: 2
+controlcenter: 
+  replicas: 1
+
+ldap:
+  namespace: openldap
+
+network:
+  domain: nip.io 
+  ingress: 35.205.9.43 #FIX  
+
+

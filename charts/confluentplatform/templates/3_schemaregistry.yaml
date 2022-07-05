@@ -1,0 +1,37 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaRegistry
+metadata:
+  name: schemaregistry
+  namespace: {{ .Release.Namespace }}
+spec:
+  # license:
+  #  globalLicense: true
+  replicas: {{ .Values.schemaregistry.replicas }}
+  image:
+    application: confluentinc/cp-schema-registry:{{ .Values.version }}
+    init: confluentinc/confluent-init-container:{{ .Values.initcontainer.version }}
+  configOverrides:
+    server: 
+    - "confluent.metadata.server.urls.fail.on.401=true"
+    - "confluent.metadata.server.urls.max.retries=3"
+  tls:
+    secretRef: schemaregistry-tls
+  authorization:
+    type: rbac
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka.{{ .Release.Namespace }}.svc.cluster.local:9071
+      authentication:
+        type: mtls
+      tls:
+        enabled: true
+    mds:
+      endpoint: https://kafka.{{ .Release.Namespace }}.svc.cluster.local:8090
+      tokenKeyPair:
+        secretRef: mds-token
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: sr-mds-client
+      tls:
+        enabled: true

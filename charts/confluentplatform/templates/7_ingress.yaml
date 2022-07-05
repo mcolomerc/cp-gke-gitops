@@ -1,0 +1,77 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-with-sni
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS      
+spec:
+  tls:
+    - hosts:
+      - kafka.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      - b0.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      - b1.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      - b2.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      - b3.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      - b4.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      - ksqldb.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      - connect.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+  rules:
+    - host: kafka.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: kafka-bootstrap
+              servicePort: 9092
+    - host: b0.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: kafka-0-internal
+              servicePort: 9092
+    - host: b1.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: kafka-1-internal
+              servicePort: 9092
+    - host: b2.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: kafka-2-internal
+              servicePort: 9092 
+    - host: b3.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: kafka-3-internal
+              servicePort: 9092 
+    - host: b4.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: kafka-4-internal
+              servicePort: 9092 
+    - host: ksqldb.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: ksqldb-bootstrap
+              servicePort: 8088
+    - host: connect.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: connect-bootstrap
+              servicePort: 8083
+    - host: controlcenter.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
+      http:
+        paths:
+          - backend: 
+             serviceName: controlcenter-0-internal
+             servicePort: 9021

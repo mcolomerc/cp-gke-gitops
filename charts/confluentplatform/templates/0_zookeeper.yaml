@@ -1,0 +1,18 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Zookeeper
+metadata:
+  name: zookeeper
+  namespace: {{ .Release.Namespace }}
+spec: 
+  replicas: {{ .Values.zookeeper.replicas }}
+  image:
+    application: confluentinc/cp-zookeeper:{{ .Values.version }}
+    init: confluentinc/confluent-init-container:{{ .Values.initcontainer.version }}
+  dataVolumeCapacity: 10Gi
+  logVolumeCapacity: 10Gi
+  authentication:
+    type: mtls
+    principalMappingRules: 
+      - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+  tls:
+    secretRef: zookeeper-tls
