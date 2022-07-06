@@ -27,6 +27,16 @@ module "gke" {
 }
 
 
+// CFK SECRETS
+module "cp_creds" {
+    source = "./modules/cp_creds"  
+    cluster_endpoint       = module.gke.cluster_endpoint
+    client_certificate     = module.gke.client_certificate
+    client_key             = module.gke.client_key
+    cluster_ca_certificate = module.gke.cluster_ca_certificate  
+    namespace = var.namespace 
+}
+
 //FLUX 
 module "flux_setup" {
     source = "./modules/flux" 
@@ -46,4 +56,3 @@ module "flux_setup" {
     use_private_endpoint = true
     github_deploy_key_title = "flux-token" 
 }
-
