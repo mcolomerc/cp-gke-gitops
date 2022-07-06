@@ -82,5 +82,7 @@ spec:
           secretRef: mds-client
     zookeeper:
       endpoint: zookeeper.{{ .Release.Namespace }}.svc.cluster.local:2182 
+      authentication:
+        type: mtls
       tls:
-        enabled: true
+        enabled: true 
