@@ -7,6 +7,7 @@ spec:
   # license:
   #  globalLicense: true
   replicas: {{ .Values.kafka.replicas }}
+  oneReplicaPerNode: true
   image:
     application: confluentinc/cp-server:{{ .Values.version }}
     init: confluentinc/confluent-init-container:{{ .Values.initcontainer.version }}
@@ -22,55 +23,7 @@ spec:
       - "event.logger.exporter.kafka.topic.replicas={{ .Values.kafka.replicas }}"
       - "offsets.topic.replication.factor={{ .Values.kafka.replicas }}" 
       - "confluent.metadata.server.urls.fail.on.401=true"
-      - "confluent.metadata.server.urls.max.retries=3"
-  metricReporter:
-    enabled: true
-    authentication:
-      type: mtls  
-    tls:
-      enabled: true
-  metrics: 
-    authentication:
-      type: mtls  
-    tls:
-      enabled: true
-    prometheus:
-      whitelist: 
-        - "kafka.cluster:type=Partition,name=UnderReplicated,*"
-        - "kafka.cluster:type=Partition,name=InSyncReplicasCount,*"
-        - "kafka.cluster:type=Partition,name=ReplicasCount,*"
-        - "kafka.cluster:type=Partition,name=UnderMinIsr,*"
-      rules:
-        - pattern : kafka.server<type=(.+), name=(.+), clientId=(.+), topic=(.+), partition=(.*)><>Value
-          name: kafka_server_$1_$2
-          type: GAUGE
-          labels:
-            clientId: "$3"
-            topic: "$4"
-            partition: "$5"
-        - pattern : kafka.server<type=(.+), name=(.+), clientId=(.+), brokerHost=(.+), brokerPort=(.+)><>Value
-          name: kafka_server_$1_$2
-          type: GAUGE
-          labels:
-            clientId: "$3"
-            broker: "$4:$5"
-        - pattern: kafka.(\w+)<type=(.+), name=(.+)Percent\w*><>MeanRate
-          name: kafka_$1_$2_$3_percent
-          type: GAUGE
-        - pattern: kafka.(\w+)<type=(.+), name=(.+)Percent\w*><>Value
-          name: kafka_$1_$2_$3_percent
-          type: GAUGE
-        - pattern: kafka.(\w+)<type=(.+), name=(.+)Percent\w*, (.+)=(.+)><>Value
-          name: kafka_$1_$2_$3_percent
-          type: GAUGE
-          labels:
-            "$4": "$5"
-        - pattern: kafka.(\w+)<type=(.+), name=(.+)PerSec\w*, (.+)=(.+), (.+)=(.+)><>Count
-          name: kafka_$1_$2_$3_total
-          type: COUNTER
-          labels:
-            "$4": "$5"
-            "$6": "$7"
+      - "confluent.metadata.server.urls.max.retries=3" 
   tls:
     secretRef: kafka-tls
   listeners:
