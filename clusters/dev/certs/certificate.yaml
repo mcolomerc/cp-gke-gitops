@@ -19,7 +19,7 @@ spec:
       - London
   privateKey:
     algorithm: RSA
-    encoding: PKCS8
+    encoding: PKCS12
     size: 2048
   issuerRef:
     name: selfsigned-issuer
@@ -75,18 +75,7 @@ spec:
   issuerRef:
     kind: Issuer
     name: injector-ca-issuer
-  secretName: kafka-tls
-  keystores:
-    jks:
-      create: true
-      passwordSecretRef: # Password used to encrypt the keystore
-        key: password-key
-        name: jks-password-secret
-    pkcs12:
-      create: true
-      passwordSecretRef: # Password used to encrypt the keystore
-        key: password-key
-        name: pkcs12-password-secret
+  secretName: kafka-tls 
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -124,18 +113,7 @@ spec:
   issuerRef:
     kind: Issuer
     name: injector-ca-issuer 
-  secretName: zookeeper-tls
-  keystores:
-    jks:
-      create: true
-      passwordSecretRef: # Password used to encrypt the keystore
-        key: password-key
-        name: jks-password-secret
-    pkcs12:
-      create: true
-      passwordSecretRef: # Password used to encrypt the keystore
-        key: password-key
-        name: pkcs12-password-secret
+  secretName: zookeeper-tls 
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
