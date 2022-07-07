@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec: 
   replicas: {{ .Values.zookeeper.replicas }}
+  oneReplicaPerNode: true
   image:
     application: confluentinc/cp-zookeeper:{{ .Values.version }}
     init: confluentinc/confluent-init-container:{{ .Values.initcontainer.version }}
