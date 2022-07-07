@@ -8,6 +8,15 @@ spec:
   isCA: true 
   commonName: injector-selfsigned-ca
   secretName: injector-ca-secret 
+  subject:
+    countries:
+      - UK
+    organizationalUnits:
+      - Training
+    streetAddresses:
+      - 1 Demo Loop
+    provinces:
+      - London
   privateKey:
     algorithm: RSA
     encoding: PKCS8
@@ -36,12 +45,22 @@ spec:
   renewBefore: 360h # 15d
   commonName: kafka.confluent.svc 
   isCA: false 
+  subject:
+    countries:
+      - UK
+    organizationalUnits:
+      - Training
+    streetAddresses:
+      - 1 Demo Loop
+    provinces:
+      - London
   privateKey:
     algorithm: RSA
     encoding: PKCS8
     size: 2048
   usages:
     - server auth
+    - signing
     - client auth
     - digital signature
     - key encipherment
@@ -66,6 +85,15 @@ metadata:
 spec:
   commonName: zookeeper.confluent.svc
   isCA: false  
+  subject:
+    countries:
+      - UK
+    organizationalUnits:
+      - Training
+    streetAddresses:
+      - 1 Demo Loop
+    provinces:
+      - London
   privateKey:
     algorithm: RSA
     encoding: PKCS8
@@ -75,6 +103,7 @@ spec:
     - client auth
     - digital signature
     - key encipherment
+    - signing
   dnsNames: 
     - zookeeper.confluent.svc.cluster.local   
     - '*.zookeeper.confluent.svc.cluster.local'
