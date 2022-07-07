@@ -3,9 +3,7 @@ kind: Kafka
 metadata:
   name: kafka
   namespace: {{ .Release.Namespace }}
-spec:
-  # license:
-  #  globalLicense: true
+spec: 
   replicas: {{ .Values.kafka.replicas }}
   oneReplicaPerNode: true
   image:

@@ -4,7 +4,7 @@ metadata:
   name: kafka-cert
   namespace: confluent
 spec:
-  commonName: kafka.confluent.svc.cluster.local
+  commonName: kafka.confluent.svc 
   subject:
     organizations:
       - local
@@ -18,10 +18,10 @@ spec:
     - client auth
   dnsNames:
   - kafka
-  - kafka.$(NAMESPACE)
-  - kafka.$(NAMESPACE).svc.cluster.local
-  - '*.$(NAMESPACE).svc.cluster.local'
-  - '*.kafka.$(NAMESPACE).svc.cluster.local' 
+  - kafka.confluent
+  - kafka.confluent.svc.cluster.local
+  - '*.confluent.svc.cluster.local'
+  - '*.kafka.confluent.svc.cluster.local' 
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
@@ -33,7 +33,7 @@ metadata:
   name: zookeeper-cert
   namespace: confluent
 spec:
-  commonName: zookeeper.confluent.svc.cluster.local
+  commonName: zookeeper.confluent.svc
   subject:
     organizations:
       - local
@@ -45,14 +45,10 @@ spec:
   usages:
     - server auth
     - client auth
-  dnsNames:
-    - zookeeper
-    - zookeeper.$(NAMESPACE)
-    - zookeeper.$(NAMESPACE).svc.cluster.local
-    - '*.$(NAMESPACE).svc.cluster.local'
-    - '*.zookeeper.$(NAMESPACE).svc.cluster.local' 
-    - zookeeper.confluent.svc.cluster.local
-    - kafka.$(NAMESPACE).svc.cluster.local
+  dnsNames: 
+    - zookeeper.confluent.svc.cluster.local  
+    - '*.zookeeper.confluent.svc.cluster.local'
+    - '*.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
@@ -67,10 +63,10 @@ spec:
   commonName: controlcenter
   dnsNames:
     - controlcenter
-    - controlcenter.$(NAMESPACE)
-    - controlcenter.$(NAMESPACE).svc.cluster.local
-    - '*.$(NAMESPACE).svc.cluster.local'
-    - '*.controlcenter.$(NAMESPACE).svc.cluster.local'
+    - controlcenter.confluent
+    - controlcenter.confluent.svc.cluster.local
+    - '*.confluent.svc.cluster.local'
+    - '*.controlcenter.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
@@ -85,10 +81,10 @@ spec:
   commonName: ksqldb
   dnsNames:
     - ksqldb
-    - ksqldb.$(NAMESPACE)
-    - ksqldb.$(NAMESPACE).svc.cluster.local
-    - '*.$(NAMESPACE).svc.cluster.local'
-    - '*.ksqldb.$(NAMESPACE).svc.cluster.local'
+    - ksqldb.confluent
+    - ksqldb.confluent.svc.cluster.local
+    - '*.confluent.svc.cluster.local'
+    - '*.ksqldb.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
@@ -103,10 +99,10 @@ spec:
   commonName: schemaregistry
   dnsNames:
     - schemaregistry
-    - schemaregistry.$(NAMESPACE)
-    - schemaregistry.$(NAMESPACE).svc.cluster.local
-    - '*.$(NAMESPACE).svc.cluster.local'
-    - '*.schemaregistry.$(NAMESPACE).svc.cluster.local'
+    - schemaregistry.confluent
+    - schemaregistry.confluent.svc.cluster.local
+    - '*.confluent.svc.cluster.local'
+    - '*.schemaregistry.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
@@ -121,10 +117,10 @@ spec:
   commonName: connect
   dnsNames:
     - connect
-    - connect.$(NAMESPACE)
-    - connect.$(NAMESPACE).svc.cluster.local
-    - '*.$(NAMESPACE).svc.cluster.local'
-    - '*.connect.$(NAMESPACE).svc.cluster.local'
+    - connect.confluent
+    - connect.confluent.svc.cluster.local
+    - '*.confluent.svc.cluster.local'
+    - '*.connect.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
