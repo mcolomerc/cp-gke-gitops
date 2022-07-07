@@ -22,6 +22,11 @@ spec:
   - kafka.confluent.svc.cluster.local
   - '*.confluent.svc.cluster.local'
   - '*.kafka.confluent.svc.cluster.local' 
+  - kafka-0.kafka.confluent.svc.cluster.local
+  - zookeeper.confluent.svc.cluster.local  
+  - zookeeper-0.zookeeper.confluent.svc.cluster.local
+  - zookeeper-1.zookeeper.confluent.svc.cluster.local
+  - zookeeper-2.zookeeper.confluent.svc.cluster.local
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
@@ -47,8 +52,17 @@ spec:
     - client auth
   dnsNames: 
     - zookeeper.confluent.svc.cluster.local  
+    - zookeeper-0.zookeeper.confluent.svc.cluster.local
+    - zookeeper-1.zookeeper.confluent.svc.cluster.local
+    - zookeeper-2.zookeeper.confluent.svc.cluster.local
     - '*.zookeeper.confluent.svc.cluster.local'
     - '*.confluent.svc.cluster.local'
+    - kafka-0.kafka.confluent.svc.cluster.local
+    - kafka-1.kafka.confluent.svc.cluster.local
+    - kafka-2.kafka.confluent.svc.cluster.local
+    - kafka-3.kafka.confluent.svc.cluster.local
+    - kafka-4.kafka.confluent.svc.cluster.local
+    - '*.kafka.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
