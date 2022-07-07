@@ -5,6 +5,9 @@ metadata:
   namespace: confluent
 spec:
   commonName: kafka.confluent.svc.cluster.local
+  subject:
+    organizations:
+      - local
   isCA: false
   privateKey:
     algorithm: RSA
@@ -18,7 +21,7 @@ spec:
   - kafka.$(NAMESPACE)
   - kafka.$(NAMESPACE).svc.cluster.local
   - '*.$(NAMESPACE).svc.cluster.local'
-  - '*.kafka.$(NAMESPACE).svc.cluster.local'
+  - '*.kafka.$(NAMESPACE).svc.cluster.local' 
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
@@ -31,6 +34,9 @@ metadata:
   namespace: confluent
 spec:
   commonName: zookeeper.confluent.svc.cluster.local
+  subject:
+    organizations:
+      - local
   isCA: false
   privateKey:
     algorithm: RSA
@@ -44,7 +50,9 @@ spec:
     - zookeeper.$(NAMESPACE)
     - zookeeper.$(NAMESPACE).svc.cluster.local
     - '*.$(NAMESPACE).svc.cluster.local'
-    - '*.zookeeper.$(NAMESPACE).svc.cluster.local'
+    - '*.zookeeper.$(NAMESPACE).svc.cluster.local' 
+    - zookeeper.confluent.svc.cluster.local
+    - kafka.$(NAMESPACE).svc.cluster.local
   issuerRef:
     kind: Issuer
     name: selfsigned-issuer
