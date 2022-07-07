@@ -33,7 +33,7 @@ spec:
   - '*.kafka.confluent.svc.cluster.local'  
   issuerRef:
     kind: Issuer
-    name: confluent-ca-issuer
+    name: selfsigned-issuer
   secretName: kafka-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -53,7 +53,7 @@ spec:
     - '*.confluent.svc.cluster.local' 
   issuerRef:
     kind: Issuer
-    name: confluent-ca-issuer
+    name: selfsigned-issuer 
   secretName: zookeeper-tls
 ---
 apiVersion: cert-manager.io/v1
