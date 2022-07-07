@@ -10,7 +10,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: confluentinc
-      version: "0.*"
+      version: "0.435.23"
   interval: 5m0s
   timeout: 5m0s
   releaseName: confluent-operator
