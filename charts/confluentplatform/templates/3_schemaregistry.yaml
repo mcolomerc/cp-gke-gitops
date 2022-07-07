@@ -16,22 +16,4 @@ spec:
     - "confluent.metadata.server.urls.max.retries=3"
   tls:
     secretRef: schemaregistry-tls
-  authorization:
-    type: rbac
-  dependencies:
-    kafka:
-      bootstrapEndpoint: kafka.{{ .Release.Namespace }}.svc.cluster.local:9071
-      authentication:
-        type: mtls
-      tls:
-        enabled: true
-    mds:
-      endpoint: https://kafka.{{ .Release.Namespace }}.svc.cluster.local:8090
-      tokenKeyPair:
-        secretRef: mds-token
-      authentication:
-        type: bearer
-        bearer:
-          secretRef: sr-mds-client
-      tls:
-        enabled: true
+ 
