@@ -1,58 +1,20 @@
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: injector-selfsigned-ca
-  namespace: confluent
-spec:
-  isCA: true 
-  commonName: injector-selfsigned-ca
-  secretName: injector-ca-secret  
-  privateKey:
-    algorithm: RSA 
-    size: 2048
-  issuerRef:
-    name: selfsigned-issuer
-    kind: Issuer 
----
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: injector-ca-issuer
-  namespace: confluent
-spec:
-  ca:
-    secretName: injector-ca-secret
----
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: kafka-cert
   namespace: confluent
-spec: 
-  commonName: kafka.confluent.svc 
-  isCA: false  
-  privateKey:
-    algorithm: RSA 
-    size: 2048
-  usages:
-    - server auth
-    - signing
-    - client auth
-    - digital signature
-    - key encipherment
+spec:
+  commonName: kafka
   dnsNames:
-    - kafka
-    - kafka.confluent
-    - kafka.confluent.svc.cluster.local
-    - "*.confluent.svc.cluster.local"
-    - "*.kafka.confluent.svc.cluster.local"  
-    - zookeeper.confluent.svc.cluster.local 
-    - "*.zookeeper.confluent.svc.cluster.local"
+  - kafka
+  - kafka.$(NAMESPACE)
+  - kafka.$(NAMESPACE).svc.cluster.local
+  - '*.$(NAMESPACE).svc.cluster.local'
+  - '*.kafka.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: injector-ca-issuer
-  secretName: kafka-tls 
+    name: selfsigned-issuer
+  secretName: kafka-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -60,28 +22,17 @@ metadata:
   name: zookeeper-cert
   namespace: confluent
 spec:
-  commonName: zookeeper.confluent.svc
-  isCA: false  
-  privateKey:
-    algorithm: RSA
-    encoding: PKCS12
-    size: 2048
-  usages:
-    - server auth
-    - client auth
-    - digital signature
-    - key encipherment
-    - signing
-  dnsNames: 
-    - zookeeper.confluent.svc.cluster.local   
-    - '*.zookeeper.confluent.svc.cluster.local'
-    - kafka.confluent.svc.cluster.local
-    - '*.confluent.svc.cluster.local'
-    - '*.kafka.confluent.svc.cluster.local'  
+  commonName: zookeeper
+  dnsNames:
+    - zookeeper
+    - zookeeper.$(NAMESPACE)
+    - zookeeper.$(NAMESPACE).svc.cluster.local
+    - '*.$(NAMESPACE).svc.cluster.local'
+    - '*.zookeeper.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: injector-ca-issuer 
-  secretName: zookeeper-tls 
+    name: selfsigned-issuer
+  secretName: zookeeper-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -92,13 +43,13 @@ spec:
   commonName: controlcenter
   dnsNames:
     - controlcenter
-    - controlcenter.confluent
-    - controlcenter.confluent.svc.cluster.local
-    - '*.confluent.svc.cluster.local'
-    - '*.controlcenter.confluent.svc.cluster.local'
+    - controlcenter.$(NAMESPACE)
+    - controlcenter.$(NAMESPACE).svc.cluster.local
+    - '*.$(NAMESPACE).svc.cluster.local'
+    - '*.controlcenter.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: injector-ca-issuer
+    name: selfsigned-issuer
   secretName: controlcenter-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -110,13 +61,13 @@ spec:
   commonName: ksqldb
   dnsNames:
     - ksqldb
-    - ksqldb.confluent
-    - ksqldb.confluent.svc.cluster.local
-    - '*.confluent.svc.cluster.local'
-    - '*.ksqldb.confluent.svc.cluster.local'
+    - ksqldb.$(NAMESPACE)
+    - ksqldb.$(NAMESPACE).svc.cluster.local
+    - '*.$(NAMESPACE).svc.cluster.local'
+    - '*.ksqldb.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: injector-ca-issuer
+    name: selfsigned-issuer
   secretName: ksqldb-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -128,13 +79,13 @@ spec:
   commonName: schemaregistry
   dnsNames:
     - schemaregistry
-    - schemaregistry.confluent
-    - schemaregistry.confluent.svc.cluster.local
-    - '*.confluent.svc.cluster.local'
-    - '*.schemaregistry.confluent.svc.cluster.local'
+    - schemaregistry.$(NAMESPACE)
+    - schemaregistry.$(NAMESPACE).svc.cluster.local
+    - '*.$(NAMESPACE).svc.cluster.local'
+    - '*.schemaregistry.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: injector-ca-issuer
+    name: selfsigned-issuer
   secretName: schemaregistry-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -146,11 +97,11 @@ spec:
   commonName: connect
   dnsNames:
     - connect
-    - connect.confluent
-    - connect.confluent.svc.cluster.local
-    - '*.confluent.svc.cluster.local'
-    - '*.connect.confluent.svc.cluster.local'
+    - connect.$(NAMESPACE)
+    - connect.$(NAMESPACE).svc.cluster.local
+    - '*.$(NAMESPACE).svc.cluster.local'
+    - '*.connect.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: injector-ca-issuer
+    name: selfsigned-issuer
   secretName: connect-tls
