@@ -1,3 +1,38 @@
+# This creates a wildcard certificate that could be used for any services in the confluent namespace.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: confluent-tls
+spec:
+  secretName: confluent-tls
+  dnsNames:
+  - "*.confluent.svc.cluster.local"
+  - "*.confluent"
+  issuerRef:
+    name: selfsigned-issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: confluent2-ca
+spec:
+  secretName: confluent2-ca-tls
+  commonName: confluent.svc.cluster.local
+  usages:
+    - server auth
+    - client auth
+  isCA: true
+  issuerRef:
+    name: selfsigned-issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: confluent2-ca-issuer
+spec:
+  ca:
+    secretName: confluent2-ca-tls
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -21,15 +56,10 @@ spec:
   - kafka.confluent
   - kafka.confluent.svc.cluster.local
   - '*.confluent.svc.cluster.local'
-  - '*.kafka.confluent.svc.cluster.local' 
-  - kafka-0.kafka.confluent.svc.cluster.local
-  - zookeeper.confluent.svc.cluster.local  
-  - zookeeper-0.zookeeper.confluent.svc.cluster.local
-  - zookeeper-1.zookeeper.confluent.svc.cluster.local
-  - zookeeper-2.zookeeper.confluent.svc.cluster.local
+  - '*.kafka.confluent.svc.cluster.local'  
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: confluent2-ca-issuer
   secretName: kafka-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -51,21 +81,12 @@ spec:
     - server auth
     - client auth
   dnsNames: 
-    - zookeeper.confluent.svc.cluster.local  
-    - zookeeper-0.zookeeper.confluent.svc.cluster.local
-    - zookeeper-1.zookeeper.confluent.svc.cluster.local
-    - zookeeper-2.zookeeper.confluent.svc.cluster.local
+    - zookeeper.confluent.svc.cluster.local   
     - '*.zookeeper.confluent.svc.cluster.local'
-    - '*.confluent.svc.cluster.local'
-    - kafka-0.kafka.confluent.svc.cluster.local
-    - kafka-1.kafka.confluent.svc.cluster.local
-    - kafka-2.kafka.confluent.svc.cluster.local
-    - kafka-3.kafka.confluent.svc.cluster.local
-    - kafka-4.kafka.confluent.svc.cluster.local
-    - '*.kafka.confluent.svc.cluster.local'
+    - '*.confluent.svc.cluster.local' 
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: confluent2-ca-issuer
   secretName: zookeeper-tls
 ---
 apiVersion: cert-manager.io/v1
