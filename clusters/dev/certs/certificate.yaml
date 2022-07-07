@@ -4,6 +4,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: confluent-tls
+  namespace: confluent
 spec:
   secretName: confluent-tls
   dnsNames:
@@ -16,6 +17,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: confluent-ca
+  namespace: confluent
 spec:
   secretName: confluent-ca-tls
   commonName: confluent.svc.cluster.local
