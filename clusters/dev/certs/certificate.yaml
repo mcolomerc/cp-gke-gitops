@@ -5,15 +5,12 @@ metadata:
   name: injector-selfsigned-ca
   namespace: confluent
 spec:
-  isCA: true
-  subject:
-    organizations:
-      - local
-  commonName: Agent Inject CA
-  secretName: injector-ca-secret
-  duration: 87660h  # 10 years
+  isCA: true 
+  commonName: injector-selfsigned-ca
+  secretName: injector-ca-secret 
   privateKey:
     algorithm: RSA
+    encoding: PKCS8
     size: 2048
   issuerRef:
     name: selfsigned-issuer
@@ -35,22 +32,27 @@ metadata:
   name: kafka-cert
   namespace: confluent
 spec:
-  subject:
-    organizations:
-      - local
-  commonName: Agent Inject CA
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  commonName: kafka.confluent.svc 
   isCA: false 
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
   usages:
     - server auth
     - client auth
+    - digital signature
+    - key encipherment
   dnsNames:
     - kafka
     - kafka.confluent
     - kafka.confluent.svc.cluster.local
-    - '*.confluent.svc.cluster.local'
-    - '*.kafka.confluent.svc.cluster.local'  
+    - "*.confluent.svc.cluster.local"
+    - "*.kafka.confluent.svc.cluster.local"  
     - zookeeper.confluent.svc.cluster.local 
-    - '*.zookeeper.confluent.svc.cluster.local'
+    - "*.zookeeper.confluent.svc.cluster.local"
   issuerRef:
     kind: Issuer
     name: injector-ca-issuer
@@ -62,14 +64,17 @@ metadata:
   name: zookeeper-cert
   namespace: confluent
 spec:
-  commonName: Agent Inject CA
-  isCA: false 
-  subject:
-    organizations:
-      - local
+  commonName: zookeeper.confluent.svc
+  isCA: false  
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
   usages:
     - server auth
     - client auth
+    - digital signature
+    - key encipherment
   dnsNames: 
     - zookeeper.confluent.svc.cluster.local   
     - '*.zookeeper.confluent.svc.cluster.local'
