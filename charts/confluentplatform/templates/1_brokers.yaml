@@ -22,7 +22,7 @@ spec:
       - "offsets.topic.replication.factor={{ .Values.kafka.replicas }}" 
       - "confluent.metadata.server.urls.fail.on.401=true"
       - "confluent.metadata.server.urls.max.retries=3" 
- tls:
+  tls:
     secretRef: kafka-tls
   listeners:
     external:
