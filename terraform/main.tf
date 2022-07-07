@@ -54,5 +54,5 @@ module "flux_setup" {
     cluster_name = module.gke.cluster_name
     cluster_region = var.region
     use_private_endpoint = true
-    github_deploy_key_title = "flux-token" 
+    github_deploy_key_title = "flux-token"  
 }

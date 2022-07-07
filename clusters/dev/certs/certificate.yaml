@@ -76,6 +76,17 @@ spec:
     kind: Issuer
     name: injector-ca-issuer
   secretName: kafka-tls
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef: # Password used to encrypt the keystore
+        key: password-key
+        name: jks-password-secret
+    pkcs12:
+      create: true
+      passwordSecretRef: # Password used to encrypt the keystore
+        key: password-key
+        name: pkcs12-password-secret
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -114,6 +125,17 @@ spec:
     kind: Issuer
     name: injector-ca-issuer 
   secretName: zookeeper-tls
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef: # Password used to encrypt the keystore
+        key: password-key
+        name: jks-password-secret
+    pkcs12:
+      create: true
+      passwordSecretRef: # Password used to encrypt the keystore
+        key: password-key
+        name: pkcs12-password-secret
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
