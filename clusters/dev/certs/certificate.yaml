@@ -2,17 +2,29 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: confluent-ca
+  name: injector-selfsigned-ca
   namespace: confluent
 spec:
-  secretName: confluent-ca-tls
-  commonName: confluent.svc.cluster.local
-  usages:
-    - server auth
-    - client auth
   isCA: true
+  commonName: Agent Inject CA
+  secretName: injector-ca-secret
+  duration: 87660h  # 10 years
+  privateKey:
+    algorithm: RSA
+    size: 2048
   issuerRef:
-    name: selfsigned-issuer 
+    name: selfsigned-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: injector-ca-issuer
+  namespace: confluent
+spec:
+  ca:
+    secretName: injector-ca-secret
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -26,14 +38,14 @@ spec:
     - server auth
     - client auth
   dnsNames:
-  - kafka
-  - kafka.confluent
-  - kafka.confluent.svc.cluster.local
-  - '*.confluent.svc.cluster.local'
-  - '*.kafka.confluent.svc.cluster.local'  
+    - kafka
+    - kafka.confluent
+    - kafka.confluent.svc.cluster.local
+    - '*.confluent.svc.cluster.local'
+    - '*.kafka.confluent.svc.cluster.local'  
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: injector-ca-issuer
   secretName: kafka-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -53,7 +65,7 @@ spec:
     - '*.confluent.svc.cluster.local' 
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer 
+    name: injector-ca-issuer 
   secretName: zookeeper-tls
 ---
 apiVersion: cert-manager.io/v1
