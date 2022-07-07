@@ -1,18 +1,4 @@
 ---
-# This creates a wildcard certificate that could be used for any services in the confluent namespace.
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: confluent-tls
-  namespace: confluent
-spec:
-  secretName: confluent-tls
-  dnsNames:
-  - "*.confluent.svc.cluster.local"
-  - "*.confluent"
-  issuerRef:
-    name: selfsigned-issuer
----
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
