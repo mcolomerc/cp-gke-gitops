@@ -32,7 +32,7 @@ metadata:
   name: kafka-cert
   namespace: confluent
 spec:
-  commonName: kafka.confluent.svc 
+  commonName: kafka.confluent.svc.cluster.local
   isCA: false 
   usages:
     - server auth
@@ -43,7 +43,7 @@ spec:
     - kafka.confluent.svc.cluster.local
     - '*.confluent.svc.cluster.local'
     - '*.kafka.confluent.svc.cluster.local'  
-    - zookeeper.confluent.svc.cluster.local   
+    - zookeeper.confluent.svc.cluster.local 
     - '*.zookeeper.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
@@ -56,7 +56,7 @@ metadata:
   name: zookeeper-cert
   namespace: confluent
 spec:
-  commonName: zookeeper.confluent.svc
+  commonName: zookeeper.confluent.svc.cluster.local
   isCA: false 
   usages:
     - server auth
@@ -67,9 +67,6 @@ spec:
     - kafka.confluent.svc.cluster.local
     - '*.confluent.svc.cluster.local'
     - '*.kafka.confluent.svc.cluster.local'  
-    - kafka-4.kafka.confluent.svc.cluster.local
-    - kafka-4.confluent.svc.cluster.local
-  
   issuerRef:
     kind: Issuer
     name: injector-ca-issuer 
