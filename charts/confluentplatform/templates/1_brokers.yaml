@@ -26,23 +26,21 @@ spec:
     secretRef: kafka-tls
   listeners:
     internal:
-      authentication:
-        type: mtls  
-        principalMappingRules: 
-          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+      # authentication:
+      #  type: mtls  
+      #  principalMappingRules: 
+      #    - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
       tls:
         enabled: true 
     external:
-      authentication:
-        type: mtls  
-        principalMappingRules: 
-          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+      # authentication:
+      #  type: mtls  
+      #  principalMappingRules: 
+      #    - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
       tls:
         enabled: true 
   metricReporter:
-    enabled: true
-    authentication:
-      type: mtls  
+    enabled: true 
     tls:
       enabled: true
   authorization:
