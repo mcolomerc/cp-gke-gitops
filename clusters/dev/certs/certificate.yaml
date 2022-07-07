@@ -43,6 +43,8 @@ spec:
     - kafka.confluent.svc.cluster.local
     - '*.confluent.svc.cluster.local'
     - '*.kafka.confluent.svc.cluster.local'  
+    - zookeeper.confluent.svc.cluster.local   
+    - '*.zookeeper.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
     name: injector-ca-issuer
@@ -62,7 +64,9 @@ spec:
   dnsNames: 
     - zookeeper.confluent.svc.cluster.local   
     - '*.zookeeper.confluent.svc.cluster.local'
-    - '*.confluent.svc.cluster.local' 
+    - kafka.confluent.svc.cluster.local
+    - '*.confluent.svc.cluster.local'
+    - '*.kafka.confluent.svc.cluster.local'  
   issuerRef:
     kind: Issuer
     name: injector-ca-issuer 
