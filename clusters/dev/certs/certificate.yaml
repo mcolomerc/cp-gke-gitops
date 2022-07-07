@@ -56,7 +56,7 @@ spec:
       - London
   privateKey:
     algorithm: RSA
-    encoding: PKCS8
+    encoding: PKCS12
     size: 2048
   usages:
     - server auth
@@ -96,7 +96,7 @@ spec:
       - London
   privateKey:
     algorithm: RSA
-    encoding: PKCS8
+    encoding: PKCS12
     size: 2048
   usages:
     - server auth
