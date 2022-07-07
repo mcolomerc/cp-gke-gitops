@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: selfsigned-issuer
-  namespace: confluent
+  name: ca-issuer
 spec:
-  selfSigned: {}
+  ca:
+    secretName: ca-key-pair

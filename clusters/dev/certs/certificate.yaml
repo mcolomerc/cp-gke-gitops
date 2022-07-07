@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: kafka-cert
+  name: ca-kafka-cert
   namespace: confluent
 spec:
   commonName: kafka
@@ -13,13 +13,13 @@ spec:
   - '*.kafka.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: ca-issuer
   secretName: kafka-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: zookeeper-cert
+  name: ca-zookeeper-cert
   namespace: confluent
 spec:
   commonName: zookeeper
@@ -31,13 +31,13 @@ spec:
     - '*.zookeeper.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: ca-issuer
   secretName: zookeeper-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: c3-cert
+  name: ca-c3-cert
   namespace: confluent
 spec:
   commonName: controlcenter
@@ -49,13 +49,13 @@ spec:
     - '*.controlcenter.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: ca-issuer
   secretName: controlcenter-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ksqldb-cert
+  name: ca-ksql-cert
   namespace: confluent
 spec:
   commonName: ksqldb
@@ -67,13 +67,13 @@ spec:
     - '*.ksqldb.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: ca-issuer
   secretName: ksqldb-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: sr-cert
+  name: ca-sr-cert
   namespace: confluent
 spec:
   commonName: schemaregistry
@@ -85,13 +85,13 @@ spec:
     - '*.schemaregistry.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: ca-issuer
   secretName: schemaregistry-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: connect-cert
+  name: ca-connect-cert
   namespace: confluent
 spec:
   commonName: connect
@@ -103,5 +103,5 @@ spec:
     - '*.connect.$(NAMESPACE).svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: ca-issuer
   secretName: connect-tls
