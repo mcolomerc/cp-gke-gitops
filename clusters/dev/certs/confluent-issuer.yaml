@@ -1,0 +1,7 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: confluent-ca-issuer
+spec:
+  ca:
+    secretName: confluent-ca-tls
