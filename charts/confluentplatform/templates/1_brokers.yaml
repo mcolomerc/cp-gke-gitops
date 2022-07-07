@@ -77,9 +77,9 @@ spec:
         type: bearer
         bearer:
           secretRef: mds-client
-    zookeeper:
-      endpoint: zookeeper.{{ .Release.Namespace }}.svc.cluster.local:2182
+    #zookeeper:
+      #endpoint: zookeeper.{{ .Release.Namespace }}.svc.cluster.local:2182
       #authentication:
       #  type: mtls
-      tls:
-        enabled: true
+      #tls:
+      #  enabled: true
