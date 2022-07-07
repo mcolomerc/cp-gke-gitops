@@ -7,24 +7,13 @@ metadata:
 spec:
   isCA: true 
   commonName: injector-selfsigned-ca
-  secretName: injector-ca-secret 
-  subject:
-    countries:
-      - UK
-    organizationalUnits:
-      - Training
-    streetAddresses:
-      - 1 Demo Loop
-    provinces:
-      - London
+  secretName: injector-ca-secret  
   privateKey:
-    algorithm: RSA
-    encoding: PKCS12
+    algorithm: RSA 
     size: 2048
   issuerRef:
     name: selfsigned-issuer
-    kind: Issuer
-    group: cert-manager.io
+    kind: Issuer 
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -40,23 +29,11 @@ kind: Certificate
 metadata:
   name: kafka-cert
   namespace: confluent
-spec:
-  duration: 2160h # 90d
-  renewBefore: 360h # 15d
+spec: 
   commonName: kafka.confluent.svc 
-  isCA: false 
-  subject:
-    countries:
-      - UK
-    organizationalUnits:
-      - Training
-    streetAddresses:
-      - 1 Demo Loop
-    provinces:
-      - London
+  isCA: false  
   privateKey:
-    algorithm: RSA
-    encoding: PKCS12
+    algorithm: RSA 
     size: 2048
   usages:
     - server auth
@@ -85,15 +62,6 @@ metadata:
 spec:
   commonName: zookeeper.confluent.svc
   isCA: false  
-  subject:
-    countries:
-      - UK
-    organizationalUnits:
-      - Training
-    streetAddresses:
-      - 1 Demo Loop
-    provinces:
-      - London
   privateKey:
     algorithm: RSA
     encoding: PKCS12
