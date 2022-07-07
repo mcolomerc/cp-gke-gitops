@@ -4,4 +4,5 @@ resources:
 - issuer.yaml
 - cluster-issuer.yaml
 - certificate.yaml
- 
+configurations:
+- kustomizeconfig.yaml

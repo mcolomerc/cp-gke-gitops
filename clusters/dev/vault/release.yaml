@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vault
+  labels:
+    service: vault
+  annotations:
+  namespace: vault
+spec:
+  releaseName: vault
+  chart:
+    spec:
+      sourceRef:
+        kind: HelmRepository
+        name: vault
+      chart: vault
+      version: ~x.x.x 
+  interval: 5m0s
+  timeout: 5m0s
+  values: 
+    injector.replicas: 2  
+    injector.leaderElector.enabled: false  
+    injector.certs.secretName: injector-tls  
+    injector.webhookAnnotations: "cert-manager.io/inject-ca-from: vault/injector-certificate"
