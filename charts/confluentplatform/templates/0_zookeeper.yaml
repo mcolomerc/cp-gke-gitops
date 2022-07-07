@@ -13,8 +13,8 @@ spec:
   logVolumeCapacity: 10Gi 
   tls:
     secretRef: zookeeper-tls
-  authentication:
-    type: mtls
-    principalMappingRules: 
-      - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+  # authentication:
+  #  type: mtls
+  #  principalMappingRules: 
+  #    - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
    
