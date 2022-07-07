@@ -25,8 +25,63 @@ spec:
   tls:
     secretRef: kafka-tls
   listeners:
-    external:
+    internal:
+      authentication:
+        type: mtls  
+        principalMappingRules: 
+          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
       tls:
-        enabled: true
+        enabled: true 
+    external:
+      authentication:
+        type: mtls  
+        principalMappingRules: 
+          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+      tls:
+        enabled: true 
   metricReporter:
     enabled: true
+    authentication:
+      type: mtls  
+    tls:
+      enabled: true
+  authorization:
+    type: rbac
+    superUsers:
+    - User:kafka
+  services:
+    mds:
+      tls:
+        enabled: true
+      tokenKeyPair:
+        secretRef: mds-token
+      provider:
+        type: ldap
+        ldap:
+          address: ldap://ldap.{{ .Release.Namespace }}.svc.cluster.local:389
+          authentication:
+            type: simple
+            simple:
+              secretRef: credential
+          configurations:
+            groupNameAttribute: cn
+            groupObjectClass: group
+            groupMemberAttribute: member
+            groupMemberAttributePattern: CN=(.*),DC=test,DC=com
+            groupSearchBase: dc=test,dc=com
+            userNameAttribute: cn
+            userMemberOfAttributePattern: CN=(.*),DC=test,DC=com
+            userObjectClass: organizationalRole
+            userSearchBase: dc=test,dc=com
+  dependencies:
+    kafkaRest:
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-client
+    zookeeper:
+      endpoint: zookeeper.{{ .Release.Namespace }}.svc.cluster.local:2182
+      authentication:
+        type: mtls
+      tls:
+        enabled: true

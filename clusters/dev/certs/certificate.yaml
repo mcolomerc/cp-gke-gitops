@@ -83,7 +83,7 @@ spec:
     - '*.controlcenter.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: injector-ca-issuer
   secretName: controlcenter-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -101,7 +101,7 @@ spec:
     - '*.ksqldb.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: injector-ca-issuer
   secretName: ksqldb-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -119,7 +119,7 @@ spec:
     - '*.schemaregistry.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: injector-ca-issuer
   secretName: schemaregistry-tls
 ---
 apiVersion: cert-manager.io/v1
@@ -137,5 +137,5 @@ spec:
     - '*.connect.confluent.svc.cluster.local'
   issuerRef:
     kind: Issuer
-    name: selfsigned-issuer
+    name: injector-ca-issuer
   secretName: connect-tls
