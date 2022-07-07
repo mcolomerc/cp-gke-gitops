@@ -67,6 +67,9 @@ spec:
     - kafka.confluent.svc.cluster.local
     - '*.confluent.svc.cluster.local'
     - '*.kafka.confluent.svc.cluster.local'  
+    - kafka-4.kafka.confluent.svc.cluster.local
+    - kafka-4.confluent.svc.cluster.local
+  
   issuerRef:
     kind: Issuer
     name: injector-ca-issuer 
