@@ -6,6 +6,9 @@ metadata:
   namespace: confluent
 spec:
   isCA: true
+  subject:
+    organizations:
+      - local
   commonName: Agent Inject CA
   secretName: injector-ca-secret
   duration: 87660h  # 10 years
@@ -32,7 +35,10 @@ metadata:
   name: kafka-cert
   namespace: confluent
 spec:
-  commonName: kafka.confluent.svc.cluster.local
+  subject:
+    organizations:
+      - local
+  commonName: Agent Inject CA
   isCA: false 
   usages:
     - server auth
@@ -56,8 +62,11 @@ metadata:
   name: zookeeper-cert
   namespace: confluent
 spec:
-  commonName: zookeeper.confluent.svc.cluster.local
+  commonName: Agent Inject CA
   isCA: false 
+  subject:
+    organizations:
+      - local
   usages:
     - server auth
     - client auth
