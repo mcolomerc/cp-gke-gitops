@@ -29,13 +29,13 @@ spec:
         ingressClassName: nginx
         annotations:
           cert-manager.io/cluster-issuer: ca-issuer
-          external-dns.alpha.kubernetes.io/hostname: prometheus.35.205.9.43.nip.io #FIX 
+          external-dns.alpha.kubernetes.io/hostname: prometheus.35.205.252.20.nip.io #FIX 
         hosts:
-          - prometheus.35.205.9.43.nip.io #FIX
+          - prometheus.35.205.252.20.nip.io #FIX
         tls:
           - secretName: prometheus-cert
             hosts:
-              - prometheus.35.205.9.43.nip.io #FIX
+              - prometheus.35.205.252.20.nip.io #FIX
         pathType: Prefix
       prometheusSpec:
         retention: 30d 
@@ -96,14 +96,14 @@ spec:
         ingressClassName: nginx
         annotations:
           cert-manager.io/cluster-issuer: ca-issuer
-          external-dns.alpha.kubernetes.io/hostname: grafana.35.205.9.43.nip.io #FIX
+          external-dns.alpha.kubernetes.io/hostname: grafana.35.205.252.20.nip.io #FIX
           alb.ingress.kubernetes.io/target-type: ip
         hosts:
-          - grafana.35.205.9.43.nip.io #FIX
+          - grafana.35.205.252.20.nip.io #FIX
         tls:
           - secretName: grafana-cert
             hosts:
-              - grafana.35.205.9.43.nip.io #FIX
+              - grafana.35.205.252.20.nip.io #FIX
 
     nameOverride: "prometheus-operator"
 
