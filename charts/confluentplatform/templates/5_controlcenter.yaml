@@ -4,8 +4,6 @@ metadata:
   name: controlcenter
   namespace: {{ .Release.Namespace }}
 spec:
-  # license:
-  #  globalLicense: true
   replicas: {{ .Values.controlcenter.replicas }}
   podTemplate:
     probe:
@@ -21,8 +19,6 @@ spec:
       - confluent.controlcenter.id=0
       - confluent.controlcenter.ksql.ksqldb.advertised.url=https://ksqldb.{{ .Values.network.ingress }}.{{ .Values.network.domain }}
   dataVolumeCapacity: 10Gi
-  authorization:
-    type: rbac
   tls:
     secretRef: controlcenter-tls
   dependencies: 
