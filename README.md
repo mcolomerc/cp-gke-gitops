@@ -10,25 +10,25 @@
 
 3. Deploy FluxCD 
 
-3.1 Helm charts 
+  **Helm charts** :   
 
-* Ingress controller - [ingress-nginx](https://kubernetes.github.io/ingress-nginx)
+  * Ingress controller - [ingress-nginx](https://kubernetes.github.io/ingress-nginx)
 
-    * Uses [nip.io](https://nip.io) to expose ingress controller
+      * Uses [nip.io](https://nip.io) to expose ingress controller
 
-* Prometheus operator - [prometheus-operator](https://prometheus-community.github.io/helm-charts)
+  * Prometheus operator - [prometheus-operator](https://prometheus-community.github.io/helm-charts)
 
-    * [Prometheus](https://prometheus.io) 
+      * [Prometheus](https://prometheus.io) 
 
-    * [Grafana](https://grafana.com)
+      * [Grafana](https://grafana.com)
 
-* OpenLDAP - Custom Chart (./charts/openldap)
+  * OpenLDAP - Custom Chart (./charts/openldap)
 
-* CFK operator - [confluent-for-kubernetes](https://packages.confluent.io/helm)
+  * CFK operator - [confluent-for-kubernetes](https://packages.confluent.io/helm)
 
-* Cert Manager - [cert-manager](https://cert-manager.io)
+  * Cert Manager - [cert-manager](https://cert-manager.io)
 
-* Confluent Platform - Custom Chart (./charts/confluentplatform)
+  * Confluent Platform - Custom Chart (./charts/confluentplatform)
  
 
 ## Terraform and Google Cloud 
@@ -84,7 +84,8 @@ export USER="user:<user@email.com>"
 gcloud iam service-accounts add-iam-policy-binding $SA_TERRAFORM@$PROJECT_ID.iam.gserviceaccount.com --member=$USER --role='roles/iam.serviceAccountTokenCreator'
 ```
 
-### Flux & Github 
+
+### Flux & Github 
 
   * Flux - [flux](https://flux.io)
 
