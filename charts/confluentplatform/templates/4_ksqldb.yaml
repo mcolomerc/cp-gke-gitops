@@ -3,33 +3,12 @@ kind: KsqlDB
 metadata:
   name: ksqldb
   namespace: {{ .Release.Namespace }}
-spec:
-  # license:
-  #  globalLicense: true
+spec: 
   replicas: {{ .Values.ksqldb.replicas }}
   image:
     application: confluentinc/cp-ksqldb-server:{{ .Values.version }}
     init: confluentinc/confluent-init-container:{{ .Values.initcontainer.version }}
-  dataVolumeCapacity: 10Gi
-  authorization:
-    type: rbac
+  dataVolumeCapacity: 10Gi 
   tls:
     secretRef: ksqldb-tls
-  dependencies:
-    kafka:
-      bootstrapEndpoint: kafka.{{ .Release.Namespace }}.svc.cluster.local:9071
-      authentication:
-        type: mtls
-      tls:
-        enabled: true
-    mds:
-      endpoint: https://kafka.{{ .Release.Namespace }}.svc.cluster.local:8090
-      tokenKeyPair:
-        secretRef: mds-token
-      authentication:
-        type: bearer
-        bearer:
-          secretRef: ksqldb-mds-client
-      tls:
-        enabled: true
- 
+  
