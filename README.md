@@ -6,7 +6,11 @@
 
 * Subnet
 
-2. Deploy GKE cluster & Helm charts 
+2. Deploy GKE cluster 
+
+3. Deploy FluxCD 
+
+3.1 Helm charts 
 
 * Ingress controller - [ingress-nginx](https://kubernetes.github.io/ingress-nginx)
 
@@ -23,26 +27,9 @@
 * CFK operator - [confluent-for-kubernetes](https://packages.confluent.io/helm)
 
 * Cert Manager - [cert-manager](https://cert-manager.io)
-        
-3. Confluent Platform  
 
-* Deploy CP services - TBD 
-
-    * mTLS 
-
-    * RBAC
-
-    * Confluent Hub Connectors
-
-       * kafka-connect-datagen
-
-       * kafka-connect-http
-
-    * Demo:
-
-       * Topic: demo-pageviews
-
-       * Connector: connector-demo-pageviews
+* Confluent Platform - Custom Chart (./charts/confluentplatform)
+ 
 
 ## Terraform and Google Cloud 
 
@@ -103,9 +90,7 @@ gcloud iam service-accounts add-iam-policy-binding $SA_TERRAFORM@$PROJECT_ID.iam
 
   * Github - [github](https://github.com)
 
-Flux needs access to the github repository.
-
- 
+Flux needs access to the github repository. 
 
 ```sh
  export GITHUB_TOKEN=<personal_access_token>
@@ -143,20 +128,7 @@ terraform plan -var-file="terraform.tfvars"
 ```shell 
 terraform apply -var-file="terraform.tfvars"
 ``` 
-
-## Confluent platform chart deployment
-
-```sh 
-$ terraform plan -target=module.cp 
-```
-
-```sh 
-terraform apply -var-file="terraform.tfvars" -target=module.cp.helm_release.confluentplatform
-``` 
-
-```sh 
-terraform destroy -target=module.cp -target=module.cp.helm_release.confluentplatform
-``` 
+ 
 
 ## Terraform TFVARs
 
@@ -196,33 +168,7 @@ disk_type = "pd-standard"
 namespace="confluent"
 ```
 
-# URL's
-
-## Kafka 
-
-  https://kafka.<ingress_ip>.nip.io 
-
-## Connect 
-
-  https://connect.<ingress_ip>.nip.io
-
-## KSQLDB 
-
-  https://ksqldb.<ingress_ip>.nip.io
-
-## Control Center UI
-    
-  https://controlcenter.<ingress_ip>.nip.io
-
-## Prometheus 
-
-  https://prometheus.<ingress_ip>.nip.io
-
-## Grafana 
-
-  https://grafana.<ingress_ip>.nip.io
-  User: admin
-  Password: prom-operator
+ 
 
 
  
